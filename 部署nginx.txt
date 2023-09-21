@@ -1,0 +1,21 @@
+1.安装nginx
+2.配置nginx.conf
+ server {
+        listen       8099;    //端口，别人通过什么端口来访问你的前端页面
+        server_name  localhost;  //填localhost就行，服务的ip
+        root   /opt/Workspace/test_web/dist/;  #vue文件dist的完整路径 
+        sendfile        on;
+	tcp_nopush      on;
+	default_type text/html;
+	location / {
+		index  /index.html;
+		try_files $uri $uri/ /index.html;
+         	}
+	error_page   500 502 503 504  /50x.html;
+	location = /50x.html {
+		root   html;
+	}
+ }
+3.若想使用外部主机连接上虚拟机访问Nginx，需要关闭虚拟机的防火墙
+systemctl stop firewalld.service
+4.通过电脑主机访问：虚拟机ip+listen端口就好了
